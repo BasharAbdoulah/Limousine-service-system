@@ -1,0 +1,26 @@
+// Import colors and sizes variables
+@import "./variables.scss";
+
+// Footer section
+footer {
+    background-color: $dark-main-color;
+    color: $text-white;
+    width: 100%;
+    margin: 0 !important;
+    h5 {
+        color: $text-white;
+        margin-bottom: 15px;
+    }
+    .bi {
+        color: #cc8604;
+    }
+    .nav-item {
+        display: flex;
+        column-gap: 8px;
+    }
+    p {
+        font-size: $text-size-s;
+    }
+}
+
+

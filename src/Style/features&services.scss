@@ -1,0 +1,64 @@
+// Import colors and sizes variables
+@import "./variables.scss";
+
+
+.feature {
+    h3 {
+        font-size: $text-size-l !important;
+        text-transform: uppercase;
+    }
+    p {
+        font-size: $text-size-s;
+    }
+}
+
+.check-rates {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 35px ;
+    background-color: $main-color;
+    align-items: center;
+    h2 {
+        font-size: $text-size-xl;
+        font-weight: 600;
+        color: $text-white;
+    }
+    P {
+        margin: 0;
+        font-size: $text-size-m;
+        color: $text-white;
+    }
+    a {
+        background-color: #cc8604;
+        color: $text-white;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 4px;
+        padding: 7px 10px;
+        cursor: pointer;
+        // border: 1px solid #fff;
+    }
+}
+
+// Services
+.services {
+    .service {
+        h3 {
+            font-size: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        p {
+            font-size: $text-size-s;
+        }
+        a {
+            color: $main-color;
+        }
+    }
+}
+.title {
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+

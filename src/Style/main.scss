@@ -1,0 +1,280 @@
+// Import colors and sizes variables
+@import "./variables.scss";
+
+
+
+// Global classes
+.f-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+p, ul {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    // font-family: "math";
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+label {
+    margin-bottom: 8px;
+}
+header {
+    padding: 15px 40px;
+    background-color: $dark-main-color;
+    top: 0px;
+    z-index: 453543543;
+    width: 100%;
+    div {
+        justify-content: space-around;
+        color: $text-white;
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            column-gap: 10px;
+            a {
+                color: $text-white;
+                text-decoration: none;
+                text-transform: uppercase;
+                font-size: $text-size-s;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                &:hover {
+                    color: $main-color;
+                }
+            }
+        }
+        h5 {
+            color: $main-color;
+            font-size: 24px;
+            p {
+                color: $text-white;
+                font-weight: 400;
+                font-size: $text-size-s;
+            }
+        }
+    }
+}
+
+main {
+    position: relative;
+    .liener {
+        position: absolute;
+        width: 100%;
+        height: 307px;
+        z-index: 122;
+        top: 0;
+        left: 0;
+        background: linear-gradient(to top, #e6af4809, $main-color);
+        row-gap: 10px;
+        padding-top: 65px;
+        font-size: $text-size-xxl;
+        color: $text-white;
+        justify-content: start;
+        letter-spacing: 2px;
+
+        P {
+            margin: 0;
+        }
+        h3 {
+            margin-bottom: -20px;
+            font-weight: 800;
+        }
+        i {
+            font-size: 30px;
+        }
+        p {
+            font-size: $text-size-m;
+            letter-spacing: normal;
+        }
+    }
+}
+
+.marketing {
+    .lodaing-container {
+        justify-content: center;
+        padding: 50px;
+        .spinner-border {
+            border-color: $main-color;
+            border-right-color: transparent;
+        }
+    }
+    .car-types {
+        padding-top: 20px;
+        ul li {
+            padding: 0 !important;
+            a {
+                color: $dark-main-color !important;
+                font-weight: 600;
+                cursor: pointer;
+                width: 100%;
+                height: 100%;
+                
+            }
+        }
+    }
+    .no-cars {
+        height: 250px;
+    }
+    .car-item {
+    padding: 50px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    max-height: 350px;
+    a {
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        height: 80%;
+        text-align: center;
+        position: relative;
+
+
+        img {
+            // width: 100%;
+            height: 100%;
+        }
+        h3 {
+            color: $dark-main-color;
+            text-transform: uppercase;
+        }
+    }
+    .hover-layout {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    
+    .layout {
+            opacity: 0;
+            width: 50%;
+            height: 100%;
+            z-index: 222;
+            background: linear-gradient(to bottom, #e6af4800, #ffffffb2);
+            .circle {
+                width: 50px;
+                height: 50px;
+                opacity: 0;
+                border-radius: 50%;
+                background-color: #ffad17;
+                color: $text-white;
+                position: relative;
+                z-index: 333;
+                cursor: pointer;
+                a {
+                    color: $text-white;
+                }
+                i {
+                    font-size: 28px;
+                    color: #fff;
+                }
+            }
+        }
+        &:hover .layout {
+            opacity: 1;
+            transition: all 0.3s ease-in;
+        }
+        &:hover .layout .circle{
+            opacity: 1;
+            transform: scale(1.1);
+            transition: all 0.1s ease-in;
+        }
+    }
+    }
+}
+
+.head-title {
+    text-align: center;
+    padding-top: 30px;
+    text-transform: uppercase;
+}
+
+.carousel-control-next-icon{
+    background-image : url("https://icons-for-free.com/iconfiles/png/512/arrow+right+chevron+chevronrightcircle+circle+right+right-1320185732004907921.png") !important;
+}
+.carousel-control-prev-icon{
+    background-image : url("https://icons-for-free.com/iconfiles/png/512/arrow+left+change+direction+left+next+undo+icon-1320166548679774960.png") !important;
+}
+
+
+// Call now section
+.bg-callnow {
+    background-color: transparent !important;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    .bg-video {
+        position: absolute;
+        top: 0;
+        left: -10px;
+        z-index: -1;
+    }
+    .callnow-caption {
+        h1 {
+            text-transform: uppercase;
+            font-size: $text-size-xxl;
+        }
+        .mx-auto {
+            h3 {
+                color: $main-color;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+            }
+ 
+
+        }
+
+        button {
+            background-color: $main-color;
+            margin: 10px 0 !important;
+            color: $text-white;
+            &:hover {
+                background-color: #ac7001;
+            }
+        }
+    }
+}
+.line-around {
+    position: relative;
+    color: $text-white;
+    text-align: center;
+    width: 50px;
+    &::before {
+        position: absolute;
+        content: "";
+        top: 50%;
+        left: -70px;
+        width: 60px;
+        height: 2px;
+        background-color: $text-white;
+    }
+    &::after {
+        position: absolute;
+        content: "";
+        top: 50%;
+        right: -70px;
+        width: 60px;
+        height: 2px;
+        background-color: $text-white;
+    }
+ }
+.language-icon {
+    display: flex;
+    column-gap: 2px;
+    align-items: center;
+    font-size: $text-size-s;
+    cursor: pointer;
+}
+

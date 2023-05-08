@@ -1,0 +1,151 @@
+// Import colors and sizes variables
+@import "./variables.scss";
+
+
+
+// Rates page
+.rates {
+
+    .table {
+        margin: 150px 0;
+        border-radius: 5px;
+        thead {
+            background-color: $main-color;
+            color: $text-white;
+        }
+        td:not(:first-child) {
+            background-color: #f1f1f1;
+        }
+        th ,td {
+            // width: 75px;
+            // height: 66px;
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid #dddddd82;
+            font-size: $text-size-s;
+            span {
+                color: $main-color;
+                font-weight: 800;
+                font-size: $text-size-l;
+            }
+        }
+
+        tr td:first-child {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            column-gap: 8px;
+        }
+
+        .book {
+            background-color: $main-color !important;
+            color: $text-white;
+            font-weight: 600;
+            font-size: $text-size-l;
+            cursor: pointer;
+            a {
+                text-decoration: none;
+                color: $text-white;
+            }
+            &:hover {
+                background-color: #cc8604 !important;
+            }
+        }
+        .bi {
+            font-size: 28px;
+        }
+    }
+}
+.send-btn {
+    background-color: $main-color;
+    border-color: $main-color;
+    margin-top: 20px;
+    width: 106px;
+    font-weight: 600;
+    height: 38px;
+    &:hover {
+        background-color: #ac7001;
+        border-color: #ac7001;
+    }
+    .text-primary {
+        color: $dark-main-color !important;
+        width: 24px;
+        height: 24px;
+    }
+}
+.form-group {
+    margin-top: 8px;
+}
+.car-prev {
+    padding-top: 15px;
+    text-align: center;
+}
+
+.title-bg, .second-bg {
+    
+    height: 200px; /* You must set a specified height */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+    position: relative;
+    margin: 0;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(0 0 0 / 71%);;
+        z-index: 4;
+    }
+    h3 {
+        text-align: center;
+        color: $text-white;
+        position: relative;
+        z-index: 23;
+    }
+}
+.title-bg {
+    background-image: url("../images/Cadillac-CT6-EU-spec-2016-2560x1600-001.jpg");
+}
+.second-bg.home {
+    background-image: url("../images/sigmund-3tMwhY2aqGg-unsplash.jpg");
+}
+.second-bg {
+    background-image: url("../images/talia-PKdQIG4goQc-unsplash.jpg");
+    flex-direction: column;
+    height: 500px;
+    .col-8 {
+        text-align: left;
+        box-shadow: 0 0 20px 20px #00000066;
+        background-color: #03030361;
+        h3 {
+            width: fit-content;
+            text-transform: uppercase;
+            font-size: $text-size-xxl;
+        }
+        p {
+            font-size: $text-size-s;
+            color: $text-white;
+            width: 65%;
+            position: relative;
+            z-index: 7;
+        }
+        button {
+            position: relative;
+            z-index: 45;
+            padding: 10px;
+            width: fit-content;
+            margin-top: 40px;
+            font-size: $text-size-m;
+            font-weight: 600;
+            color: $main-color;
+            border-color: $main-color;
+                background-color: $main-color;
+                color: $text-white;
+
+        }
+    }
+}

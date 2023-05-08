@@ -1,0 +1,122 @@
+// Import colors and sizes variables
+@import "../../../Style/variables.scss";
+
+
+.dashboard {
+    direction: rtl;
+    background-color: #f5f5f5;
+    i {
+        color: $dark-main-color;
+        font-size: 30px;
+    }
+    .row {
+        margin: 0 !important;
+        .col-9 {
+            padding: 20px 50px;
+        }
+    }
+}
+.navbar{
+    background-color: $main-color !important;
+    
+    a {
+        
+        color: $text-white !important;
+    }
+}
+
+.nav-item {
+
+    .nav-link {
+        color: $dark-main-color !important;
+        font-weight: 600 !important;
+    
+        &.active {
+            color: $text-white !important;
+            background-color: $main-color;
+        }
+    }
+}
+
+
+.form-control, .form-select {
+    width: 55% !important;
+
+}
+
+.custom-file {
+    width: 229px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ededed;
+    border-radius: 5px;
+    padding: 10px;
+    border: 2px dotted #ddd;
+}
+
+.form-group {
+    .btn {
+        background-color: $main-color !important;
+        border: none;
+        color: $text-white;
+        font-weight: 600;
+        width: 70px;
+        height: 35px;
+
+        .spinner-border {
+            width: 21px;
+            height: 21px;
+        }
+    }
+}
+
+.existing-cars {
+    column-gap: 10px;
+    row-gap: 20px;
+    .card {
+        padding: 8px;
+        border: none;
+        max-height: 310px;
+        box-shadow: 0 0 15px 0px #00000012;
+        img {
+            height: 61%;
+        }
+        .card-body {
+            padding: 10px 10px 0;
+            h5 {
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 5px;
+            }
+        }
+        .btn {
+            margin: 0 10px;
+        }
+    }
+}
+
+.picture-container {
+    display: flex;
+    justify-content:space-around;
+}
+.requests {
+    display: flex;
+    column-gap: 20px;
+    row-gap: 20px;
+    .request {
+        background-color: #f5f5f5;
+        padding: 20px;
+        border-radius: 4px;
+        box-shadow: 0 0 10px 1px #0000001f;
+        p {
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }    
+    }
+}
+
+.pagination {
+    margin-top: 50px;
+}

@@ -1,0 +1,90 @@
+// import variables
+@import "./variables.scss";
+//
+
+section .container {
+padding: 0 100px;
+}
+.preview {
+    h3 {
+        text-transform: uppercase;
+        margin: 25px 0 10px;
+        color: #454545;
+        font-size: 21px;
+        font-weight: 700;
+        color: $head_lines;
+    }
+    padding: 60px 0;
+    .preview-column {
+        .preview-caption {
+            p {
+                color: $text-dark-min;
+                font-size: $text-size-s;
+            }
+        }
+        .car-features{
+            ul li {
+                list-style: none;
+                color: $text-dark-min;
+                font-size: $text-size-l;
+                padding: 10px;
+                border-bottom: 1px solid #bbbbbb63 ;
+
+                margin-top: 10px;
+            }
+        }
+    }
+
+    .pricing-column {
+        .features-table {
+            margin-top: 40px;
+            .item {
+                background-color: #e9e9e9;
+                margin: 5px 0;
+                padding: 20px;
+                border-radius: 4px;
+                display: flex;
+                column-gap: 10px;
+            }
+            .item:last-child {
+                background-color: $main-color;
+                justify-content: center;
+                cursor: pointer;
+                a {
+                    font-weight: 600;
+                    font-size: $text-size-l;
+                    color: $text-white;
+                    text-decoration: none;
+                    text-transform: uppercase;
+                }
+            }
+        }
+        .ratings .rating {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            column-gap: 20px;
+            border-bottom: 1px solid #bbb;
+             i {
+                font-size: $text-size-xl;
+                color: $dark-main-color;
+             }
+            .caption {
+               > p {
+                    font-weight: 600;
+                    color: $text-dark-min;
+                    text-transform: uppercase;
+                }
+                .price {
+                    display: flex;
+                    align-items: center;
+                    strong {
+                        font-size: $text-size-xl;
+                        font-weight: 800;
+                        color: $main-color;
+                    }
+                }
+            }
+        }
+    }
+}
