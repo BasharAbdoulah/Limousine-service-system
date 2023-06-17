@@ -60,11 +60,10 @@ function Hero() {
                 src={cadilac}
                 alt="slider image"
                 width={`${windowSizes[0] + 30}px`}
-                height={`${windowSizes[0] / 2 - 100}px`}
+                // height={`${windowSizes[0] / 2 - 100}px`}
               />
               <Carousel.Caption>
-                <h3>{slide.caption}</h3>
-                <p>{slide.description}</p>
+                <p>Cadillac</p>
               </Carousel.Caption>
             </Carousel.Item>
           );

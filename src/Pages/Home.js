@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Router, Routes } from "react-router-dom";
 import HomePage from "./HomePage";
 import Rates from "./Rates";
@@ -6,11 +6,19 @@ import CarPreview from "./CarPreview";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import BookingModel from "../Components/BookingModel";
+import Menu from "../Components/Menu";
+import "../Style/components/menu.scss";
 
 function Home() {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpen = () => {
+    setIsOpen(!isOpen);
+    console.log("toggle");
+  };
   return (
-    <div className="App">
-      <Header />
+    <>
+      <Header handleOpen={handleOpen} />
+      <Menu handleOpen={handleOpen} isOpen={isOpen} />
       <BookingModel />
       <Routes>
         <Route path="/" exact element={<HomePage />} />
@@ -18,7 +26,7 @@ function Home() {
         <Route path="/carPreview" element={<CarPreview />} />
       </Routes>
       <Footer />
-    </div>
+    </>
   );
 }
 

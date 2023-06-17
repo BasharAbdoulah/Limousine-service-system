@@ -1,63 +1,77 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { storage } from "../../firebase";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  listAll,
-  list,
-} from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
-import { Image } from "antd";
+import useFetch from "../../localHooks/useFetch";
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 function AddVehicle() {
   const [carTypes, setCarTypes] = useState();
-  const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(null);
-  const [images, setImage] = useState();
   const [uploadLoading1, setUploadLoading1] = useState(false);
   const [uploadLoading2, setUploadLoading2] = useState(false);
   const [newImage1, setNewImage1] = useState();
   const [newImage2, setNewImage2] = useState();
 
-  useEffect(() => {
-    const getData = async () => {
-      // Get car Types
-      const res = await axios.get("https://localhost:44316/api/CarTypes");
-      console.log(res.data);
-      if (res.status) setCarTypes(res?.data);
-    };
+  const Ref = useRef();
 
-    getData();
+  useEffect(() => {
+    excuteCarsTypes(false);
   }, []);
 
-  console.log(carTypes);
+  // Get Cars types
+  const {
+    data: carsTypesData,
+    loading: carsTypesLoading,
+    error: carsTypesErr,
+    excuteFetch: excuteCarsTypes,
+  } = useFetch(
+    `${process.env.REACT_APP_PUBLIC_URL}${process.env.REACT_APP_PUBLIC_CARTYPE}`,
 
-  const imagesListRef = ref(storage, "images/");
+    "get",
+    true
+  );
+
+  // Post Cars
+  const {
+    data: postCarData,
+    loading: postCarLoading,
+    error: postCarError,
+    excuteFetch: excutePostCar,
+  } = useFetch(
+    `${process.env.REACT_APP_PUBLIC_URL}${process.env.REACT_APP_PUBLIC_CAR}`,
+
+    "post",
+    true
+  );
+
+  useEffect(() => {
+    if (carsTypesData) {
+      setCarTypes(carsTypesData);
+    } else if (carsTypesErr != null) {
+      console.error(carsTypesErr);
+    }
+  }, [carsTypesData]);
+
+  useEffect(() => {
+    if (postCarData?.statusCode == 200) {
+      setIsSuccess(true);
+      window.scrollTo({ top: 0 });
+      setNewImage1();
+      setNewImage2();
+      Ref.current.reset();
+    } else if (carsTypesErr != null) {
+      console.error(postCarError);
+    }
+  }, [postCarData]);
 
   const handleSubmit = async (e) => {
-    setLoading(true);
     e.preventDefault();
     var v = e.target;
-    console.log(images);
-    let urls = [];
-    upload(0)
-      .then((q) => {
-        urls = [q];
-        return upload(1);
-      })
-      .then((w) => {
-        urls.push(w);
-        postCar(v, urls);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    postCar(v, newImage1, newImage2);
   };
 
   const handleMainImg = async (e) => {
-    console.log(e.target.files);
     setUploadLoading1(true);
     await upload(e.target.files[0])
       .then((u) => setNewImage1(u))
@@ -72,11 +86,8 @@ function AddVehicle() {
       .finally((e) => setUploadLoading2(false));
   };
 
-  console.log(newImage1);
-
   // Uploading the image to firebase
   const upload = (img) => {
-    console.log(img);
     return new Promise((resolve, reject) => {
       // if (images == null) return;
       const imageRef = ref(storage, `images/${img.name + v4()}`);
@@ -94,64 +105,53 @@ function AddVehicle() {
     });
   };
 
-  const postCar = async (v, urls) => {
+  const postCar = async (v, url1, url2) => {
     const carType = carTypes?.filter(
       (type) => type.id == parseInt(v.carType.value)
     );
 
-    await axios
-      .post("https://localhost:44316/api/Car", {
-        carName: v.carName.value,
-        carImg: urls[0],
-        carSubImg: urls[1],
-        Preview: v.preview.value,
-        perHour: parseInt(v.perHour.value),
-        PerDay: parseInt(v.perDay.value),
-        Passengers: 4,
-        airportTransfer: parseInt(v.airport.value),
-        carType: carType[0]?.carTypeEn,
-        carTypeId: parseInt(v.carType.value),
-      })
-      .then((res) => {
-        if (res.status) {
-          setLoading(false);
-          setIsSuccess(true);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        setIsSuccess(false);
-        setLoading(false);
-      });
-  };
+    let encodedUrl1 = encodeURIComponent(url1);
+    let encodedUrl2 = encodeURIComponent(url2);
 
-  // Get all images urls from firebase
-  // useEffect(() => {
-  //   listAll(imagesListRef).then((response) => {
-  //     response.items.forEach((item) => {
-  //       getDownloadURL(item).then((url) => {
-  //         setUrls((prev) => [...prev, url]);
-  //       });
-  //     });
-  //   });
-  // }, []);
+    const body = {
+      carName: v.carName.value,
+      carImg: url1,
+      carSubImg: url2,
+      Preview: v.preview.value,
+      perHour: parseInt(v.perHour.value),
+      PerDay: parseInt(v.perDay.value),
+      Passengers: 4,
+      airportTransfer: parseInt(v.airport.value),
+      carType: carType[0]?.carTypeEn,
+      carTypeId: parseInt(v.carType.value),
+    };
+
+    excutePostCar(false, undefined, body);
+  };
 
   // Returned feedback function
-  const feedback = (statu) => {
+  const feedback = useCallback((statu) => {
     if (statu) {
-      return (
-        <div className="alert alert-success" role="alert">
-          تمت الاضافة بنجاح!
-        </div>
-      );
+      console.log("run once");
+      Swal.fire({
+        title: "نجاح!",
+        text: "تمت العملية بنجاح",
+        icon: "success",
+        confirmButtonText: "أستمر",
+      });
     } else if (statu == false) {
-      return (
-        <div className="alert alert-danger" role="alert">
-          !يوجد خطأ ما حاول, مرة اخرى
-        </div>
-      );
+      Swal.fire({
+        title: "خطأ",
+        text: "هناك خطأ ما!",
+        icon: "error",
+        confirmButtonText: "أستمر",
+      });
     }
-  };
+  }, []);
+
+  setTimeout(() => {
+    setIsSuccess(null);
+  }, 3000);
   return (
     <>
       <h2>أضافة المركبات</h2>
@@ -163,7 +163,7 @@ function AddVehicle() {
         : isSuccess == null
         ? ""
         : ""}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} ref={Ref}>
         <div className="form-group">
           <label htmlFor="carName">أسم السيارة</label>
           <input required type="text" className="form-control" id="carName" />
@@ -176,7 +176,7 @@ function AddVehicle() {
 
         <div className="form-group">
           <label htmlFor="mainImg">صورة رئيسية</label>
-          <div className="row">
+          <div className="row align-items-center">
             <div className="custom-file">
               <input
                 required
@@ -186,42 +186,69 @@ function AddVehicle() {
                 id="mainImg"
               />
             </div>
-            {newImage1 != null && <Image width={200} src={newImage1} />}
+            {newImage1 != null && <img width={200} src={newImage1} />}
+            {uploadLoading1 && (
+              <div className="spinner-border m-4" role="status"></div>
+            )}
           </div>
         </div>
 
         <div className="form-group">
           <label htmlFor="subImg">صورة فرعية</label>
-          <div className="custom-file">
-            <input
-              required
-              onChange={(e) => handleSubImg(e)}
-              type="file"
-              className="custom-file-input"
-              id="subImg"
-            />
+          <div className="row">
+            <div className="custom-file">
+              <input
+                required
+                onChange={(e) => handleSubImg(e)}
+                type="file"
+                className="custom-file-input"
+                id="subImg"
+              />
+            </div>
+            {newImage2 != null && <img width={200} src={newImage2} />}
+            {uploadLoading2 && (
+              <div className="spinner-border m-4" role="status"></div>
+            )}
           </div>
-          {newImage2 != null && <Image width={200} src={newImage2} />}
         </div>
 
         <div className="form-group">
           <label htmlFor="perHour">التكلفة بالساعة</label>
-          <input required type="number" className="form-control" id="perHour" />
+          <input
+            required
+            type="number"
+            className="form-control w-25"
+            id="perHour"
+          />
         </div>
 
         <div className="form-group">
           <label htmlFor="perDay">التكلفة باليوم</label>
-          <input type="number" required className="form-control" id="perDay" />
+          <input
+            type="number"
+            required
+            className="form-control w-25"
+            id="perDay"
+          />
         </div>
 
         <div className="form-group">
           <label htmlFor="airport">مشوار المطار</label>
-          <input type="number" required className="form-control" id="airport" />
+          <input
+            type="number"
+            required
+            className="form-control w-25"
+            id="airport"
+          />
         </div>
 
         <div className="form-group">
           <label htmlFor="carType">اختر نوع الهيكل</label>
-          <select className="form-select" id="carType" aria-label="carType">
+          <select
+            className="form-select w-25"
+            id="carType"
+            aria-label="carType"
+          >
             <option defaultValue>-- اختر --</option>
             {carTypes?.map((type) => {
               return (
@@ -234,7 +261,7 @@ function AddVehicle() {
         </div>
         <div className="form-group">
           <button type="submit" className="btn btn-info">
-            {loading ? (
+            {postCarLoading ? (
               <div className="spinner-border text-light" role="status"></div>
             ) : (
               "أضافة"

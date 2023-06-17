@@ -5,11 +5,12 @@ export const showSlice = createSlice({
   initialState: {
     value: false,
     selectedCar: null,
+    lastRequest: null,
+    tripType: null,
   },
 
   reducers: {
     showModel: (state) => {
-      console.log(state);
       state.value = true;
     },
 
@@ -19,8 +20,12 @@ export const showSlice = createSlice({
     selectCar: (state, payload) => {
       state.selectedCar = payload;
     },
+    selectedTripType: (state, payload) => {
+      state.tripType = payload;
+    },
   },
 });
 
-export const { showModel, hideModel, selectCar } = showSlice.actions;
+export const { showModel, hideModel, selectCar, selectedTripType } =
+  showSlice.actions;
 export default showSlice.reducer;

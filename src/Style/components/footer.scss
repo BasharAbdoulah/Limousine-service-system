@@ -1,5 +1,5 @@
 // Import colors and sizes variables
-@import "./variables.scss";
+@import "../variables/index.scss";
 
 // Footer section
 footer {
@@ -20,6 +20,7 @@ footer {
     }
     p {
         font-size: $text-size-s;
+        color: #c1c1c1;
     }
 }
 

@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // Bootstrap CSS
 import "bootstrap/dist/css/bootstrap.min.css";
 // Bootstrap Bundle JS
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import "../Style/main.scss";
 import OurFleet from "../Components/OurFleet";
 import CallNowPart from "../Components/CallNowPart";
 import OurFeatures from "../Components/OurFeatures";
@@ -12,9 +11,11 @@ import { useTranslation } from "react-i18next";
 import Hero from "../Components/Hero";
 import Promise from "../Components/Promise";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function HomePage() {
   const { t, i18n } = useTranslation();
+
   return (
     <main>
       <Hero />
@@ -25,7 +26,6 @@ function HomePage() {
       <hr className="featurette-divider" />
       <CallNowPart />
 
-      <hr className="featurette-divider" />
       <div className="container marketing" id="features">
         <OurFeatures />
       </div>

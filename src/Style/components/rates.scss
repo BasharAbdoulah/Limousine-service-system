@@ -1,13 +1,13 @@
 // Import colors and sizes variables
-@import "./variables.scss";
-
+@use "../helpers/mixins.scss" as *;
+@import "../variables/index.scss";
 
 
 // Rates page
 .rates {
 
     .table {
-        margin: 150px 0;
+        margin: 75px 0;
         border-radius: 5px;
         thead {
             background-color: $main-color;
@@ -24,6 +24,7 @@
             text-align: center;
             border: 1px solid #dddddd82;
             font-size: $text-size-s;
+
             span {
                 color: $main-color;
                 font-weight: 800;
@@ -36,6 +37,7 @@
             justify-content: center;
             align-items: center;
             column-gap: 8px;
+            flex-direction: column;
         }
 
         .book {
@@ -43,6 +45,9 @@
             color: $text-white;
             font-weight: 600;
             font-size: $text-size-l;
+            @include breakpoints(mobile) {
+                font-size: $text-size-s;
+            }
             cursor: pointer;
             a {
                 text-decoration: none;
@@ -90,6 +95,7 @@
     background-size: cover;
     position: relative;
     margin: 0;
+
     &::before {
         content: "";
         position: absolute;
@@ -108,30 +114,40 @@
     }
 }
 .title-bg {
-    background-image: url("../images/Cadillac-CT6-EU-spec-2016-2560x1600-001.jpg");
+    background-image: url("../../images/Cadillac-CT6-EU-spec-2016-2560x1600-001.jpg");
 }
 .second-bg.home {
-    background-image: url("../images/sigmund-3tMwhY2aqGg-unsplash.jpg");
+    background-image: url("../../images/sigmund-3tMwhY2aqGg-unsplash.jpg");
 }
 .second-bg {
-    background-image: url("../images/talia-PKdQIG4goQc-unsplash.jpg");
+    background-image: url("../../images/talia-PKdQIG4goQc-unsplash.jpg");
     flex-direction: column;
     height: 500px;
     .col-8 {
         text-align: left;
         box-shadow: 0 0 20px 20px #00000066;
         background-color: #03030361;
+        @include breakpoints(mobile) {
+            width: auto;
+        }
         h3 {
             width: fit-content;
             text-transform: uppercase;
             font-size: $text-size-xxl;
+            @include breakpoints(mobile) {
+                font-size: $text-size-xl;
+            }
         }
         p {
-            font-size: $text-size-s;
+            font-size: $text-size-m;
             color: $text-white;
             width: 65%;
             position: relative;
+            text-align: center;
             z-index: 7;
+            @include breakpoints(mobile) {
+                width: 100%;
+            }
         }
         button {
             position: relative;

@@ -1,54 +1,118 @@
-import React from "react";
+import axios from "axios";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import Menu from "./Menu";
 
-function Header() {
+function Header({ handleOpen }) {
   const { t, i18n } = useTranslation();
+  const [isOpen, setIsOpen] = useState(false);
+  const userAgent = navigator.userAgentData;
 
   const handleChangeLang = () => {
     if (i18n.language == "en") {
       i18n.changeLanguage("ar");
       document.body.style.direction = "rtl";
+      localStorage?.setItem("current-lang", "ar");
     } else {
       i18n.changeLanguage("en");
       document.body.style.direction = "ltr";
+      localStorage?.setItem("current-lang", "en");
     }
   };
+
+  useEffect(() => {
+    let currentLang = localStorage?.getItem("current-lang");
+    if (currentLang != null) {
+      if (currentLang == "ar") {
+        i18n.changeLanguage("ar");
+        document.body.style.direction = "rtl";
+      } else {
+        i18n.changeLanguage("en");
+        document.body.style.direction = "ltr";
+      }
+    }
+  }, []);
+
+  // Initialize the agent at application startup.
+  const fpPromise = import("https://openfpcdn.io/fingerprintjs/v3").then(
+    (FingerprintJS) => FingerprintJS.load()
+  );
+
+  // Saving visitors data for analysis
+  const SaveUserAgent = async (visitorId) => {
+    console.log("saveUserAgent has been triggerd", visitorId);
+    if (visitorId != undefined) {
+      await axios
+        .post("https://localhost:44316/api/UserAgent", {
+          IsMobile: userAgent.mobile,
+          Platform: userAgent.platform,
+          VisitorId: visitorId,
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
+  // Get the visitor identifier when you need it.
+  let count = 0;
+  useEffect(() => {
+    count++;
+    if (count == 1) {
+      fpPromise
+        .then((fp) => fp.get())
+        .then((result) => {
+          // This is the visitor identifier:
+          SaveUserAgent(result.visitorId);
+        });
+    }
+  }, []);
+
   return (
     <header>
-      <div className="d-flex flex-column flex-md-row ">
+      <div className="d-flex  flex-md-row ">
         <h5 className="my-0 mr-md-auto font-weight-normal">
-          Company name <p>Primium Limousine Service</p>
+          <Link to={"/"}>
+            Company name <p>Primium Limousine Service</p>
+          </Link>
         </h5>
-        <nav className="my-2 my-md-0 mr-md-3">
-          <a className="p-2 language-icon" onClick={handleChangeLang}>
-            {i18n.language == "en" ? "عربي" : "EN"}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-translate"
-              viewBox="0 0 16 16"
-            >
-              <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286H4.545zm1.634-.736L5.5 3.956h-.049l-.679 2.022H6.18z" />
-              <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H2zm7.138 9.995c.193.301.402.583.63.846-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6.066 6.066 0 0 1-.415-.492 1.988 1.988 0 0 1-.94.31z" />
-            </svg>
-          </a>
-          <a className="p-2 " href="#features">
-            {t("navbar_features")}
-          </a>
+        <Link className="to-dashboard " to={"/dashboard"}>
+          <a className="btn btn-outline-warning ">Go to dashboard</a>
+        </Link>
+        <ul className="h-nav">
+          <li className="nav-link">
+            <a className="p-2 language-icon" onClick={handleChangeLang}>
+              {i18n.language == "en" ? "عربي" : "EN"}
+              <i class="bi bi-globe"></i>
+            </a>
+          </li>
+          <li className="nav-link">
+            <a className="p-2 " href="#features">
+              {t("navbar_features")}
+            </a>
+          </li>
+          <li className="nav-link">
+            <a className="p-2 " href="#services">
+              {t("navbar_services")}
+            </a>
+          </li>
+          <li className="nav-link">
+            <Link to={"/"}> {t("navbar_home")}</Link>
+          </li>
+          <li className="nav-link">
+            <Link to={"/rates"}> {t("navbar_pricing")}</Link>
+          </li>
+        </ul>
 
-          <a className="p-2 " href="#services">
-            {t("navbar_services")}
-          </a>
-
-          <Link to={"/"}> {t("navbar_home")}</Link>
-          <Link to={"/rates"}> {t("navbar_pricing")}</Link>
-        </nav>
+        <a className="p-2  lang-for-phones" onClick={handleChangeLang}>
+          {i18n.language == "en" ? "عربي" : "EN"}
+          <i class="bi bi-globe"></i>
+        </a>
+        <div className="mobile-burger" onClick={handleOpen}>
+          <i class="bi bi-list"></i>
+        </div>
       </div>
     </header>
   );
 }
 
-export default Header;
+export default memo(Header);

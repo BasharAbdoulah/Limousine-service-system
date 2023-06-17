@@ -14,15 +14,13 @@ import {
   useParams,
   useLocation,
 } from "react-router-dom";
-import "./Style/main.scss";
-import "./Style/rates.scss";
-import "./Style/features&services.scss";
-import "./Style/footer.scss";
-import "./Style/caroverview.scss";
+import "./Style/components/main.scss";
+import "./Style/global/index.scss";
+import "./Style/components/rates.scss";
+import "./Style/components/features&services.scss";
+import "./Style/components/footer.scss";
+import "./Style/components/caroverview.scss";
 import "./Pages/Dashboard/Style/Index.scss";
-import Rates from "./Pages/Rates";
-import BookingModel from "./Components/BookingModel";
-import CarPreview from "./Pages/CarPreview";
 
 function App() {
   return (

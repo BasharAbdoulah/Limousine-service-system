@@ -48,6 +48,16 @@
   "car_feature3": "DVD مشغل",
   "car_feature4": "داخلية جلد مريحة",
   "car_service_title": "خدمات مقدمة في المركبة",
-  "car_preview": "وصف السيارة"
+  "car_preview": "وصف السيارة",
 
+  "model_label_phonenumber": "رقم الهاتف",
+  "model_label_email": "البريد الالكتروني",
+  "model_label_pickfrom": "من",
+  "model_label_pickto": "الى",
+  "model_label_time": "وقت الحضور",
+  "model_label_date": "موعد الحضور",
+  "model_label_tripType": "نوع الرحلة",
+  "model_label_duration": "مدة الرحلة",
+  "model_label_car": "أختر السيارة",
+  "model_title": "أحجز رحلتك"
 }

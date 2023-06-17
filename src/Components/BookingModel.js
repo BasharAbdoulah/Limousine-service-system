@@ -3,13 +3,18 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { hideModel, showModel } from "../redux/showModelSlice";
 import Modal from "antd/lib/modal";
+import { useTranslation } from "react-i18next";
 
 function BookingModel() {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedCar, setSelectedCar] = useState([]);
+  const [selectedCarFromForm, setSelectedCarFromForm] = useState([]);
+  const [selectedOption, setSelectedOption] = useState();
+  const { selectedCar, tripType } = useSelector((state) => state.showModel1);
+  const { t, i18n } = useTranslation();
+
   const handleSelect = (e) => {
-    setSelectedCar(e.target.value.split(","));
+    setSelectedCarFromForm(e.target.value.split(","));
   };
   const state = useSelector((state) => state.showModel1.value);
 
@@ -22,9 +27,24 @@ function BookingModel() {
       if (data.data) setCars(data.data);
     };
     fetchData();
+    if (selectedCar) {
+      setSelectedCarFromForm([
+        selectedCar.payload?.carName,
+        selectedCar.payload?.carImg,
+      ]);
+    }
   }, []);
 
-  console.log(state);
+  useEffect(() => {
+    setSelectedOption(tripType?.payload);
+  }, [tripType]);
+  useEffect(() => {
+    console.log(selectedCar);
+    setSelectedCarFromForm([
+      selectedCar?.payload.carName,
+      selectedCar?.payload.carImg,
+    ]);
+  }, [selectedCar]);
 
   /// handle submit
   const handleSubmit = async (e) => {
@@ -53,10 +73,19 @@ function BookingModel() {
         setLoading(false);
       });
   };
+
+  const isItSelected = (id) => {
+    if (selectedCar != null) {
+      if (selectedCar.payload.id == id) {
+        console.log("value", id);
+        return true;
+      } else return false;
+    }
+  };
   return (
     <>
       <Modal
-        title="Basic Modal"
+        title={t("model_title")}
         open={state}
         onOk={""}
         onCancel={() => dispatch(hideModel())}
@@ -65,7 +94,7 @@ function BookingModel() {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <div className="form-group col">
-              <label for="phoneNumber">Phone number:</label>
+              <label for="phoneNumber">{t("model_label_phonenumber")}:</label>
               <input
                 type="text"
                 className="form-control"
@@ -74,7 +103,7 @@ function BookingModel() {
               />
             </div>
             <div className="form-group col">
-              <label for="email">Email:</label>
+              <label for="email">{t("model_label_email")}:</label>
               <input
                 type="email"
                 className="form-control"
@@ -83,7 +112,7 @@ function BookingModel() {
               />
             </div>
             <div className="form-group col">
-              <label for="pickupfrom">Pick up from:</label>
+              <label for="pickupfrom">{t("model_label_pickfrom")}:</label>
               <input
                 type="text"
                 className="form-control"
@@ -93,7 +122,7 @@ function BookingModel() {
             </div>
 
             <div className="form-group col">
-              <label for="pickupto">Pick up to</label>
+              <label for="pickupto">{t("model_label_pickto")}</label>
               <input
                 type="text"
                 className="form-control"
@@ -103,7 +132,7 @@ function BookingModel() {
             </div>
           </div>
           <div className="form-group">
-            <label for="pickuptime">Pick time:</label>
+            <label for="pickuptime">{t("model_label_time")}:</label>
             <input
               type="time"
               className="form-control"
@@ -112,7 +141,7 @@ function BookingModel() {
             />
           </div>
           <div className="form-group">
-            <label for="pickuptime">Pick Date:</label>
+            <label for="pickupdate">{t("model_label_date")}:</label>
             <input
               type="date"
               className="form-control"
@@ -121,11 +150,13 @@ function BookingModel() {
             />
           </div>
           <div className="form-group">
-            <label for="triptype">Trip type:</label>
-            <select id="triptype" className="form-control form-control-sm">
-              <option value="Select" defaultValue>
-                Select---
-              </option>
+            <label for="triptype">{t("model_label_tripType")}:</label>
+            <select
+              value={selectedOption}
+              id="triptype"
+              className="form-control form-control-sm"
+            >
+              <option value="Select">Select---</option>
               <option value="day">Day</option>
               <option value="hour">Hour</option>
               <option value="airport">Airport transfer</option>
@@ -133,9 +164,9 @@ function BookingModel() {
           </div>
           <div className="form-group">
             <div className="form-group col">
-              <label for="duration">Duration:</label>
+              <label for="duration">{t("model_label_duration")}:</label>
               <select id="duration" className="form-control form-control-sm">
-                <option value="Select" selected>
+                <option value="Select" defaultValue={true}>
                   Select---
                 </option>
                 <option value={30}>30Min</option>
@@ -149,45 +180,43 @@ function BookingModel() {
               </select>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-6">
-              <div className="form-group">
-                <label for="car">Select car:</label>
-                <select
-                  onChange={handleSelect}
-                  value={selectedCar}
-                  id="car"
-                  className="form-control form-control-sm"
-                >
-                  <option value="Select" defaultValue>
-                    Select---
+          <div className="form-group">
+            <label for="car">{t("model_label_car")}:</label>
+            <select
+              onChange={handleSelect}
+              id="car"
+              className="form-control form-control-sm"
+            >
+              {/* <option value="Select">Select---</option> */}
+              {cars?.map((car) => {
+                return (
+                  <option
+                    key={car.id}
+                    data-img={car.carImg}
+                    value={[car.carName, car.carImg]}
+                    selected={isItSelected(car.id)}
+                  >
+                    {car.carName}
                   </option>
-                  {cars?.map((car) => {
-                    return (
-                      <option
-                        key={car.carId}
-                        data-img={car.carImg}
-                        value={[car.carNameEn, car.carImg]}
-                      >
-                        {car.carNameEn}
-                      </option>
-                    );
-                  })}
-                </select>
-                <button type="submit" className="btn btn-primary send-btn">
-                  {loading ? (
-                    <div
-                      className="spinner-border text-primary"
-                      role="status"
-                    ></div>
-                  ) : (
-                    " Send "
-                  )}
-                </button>
-              </div>
+                );
+              })}
+            </select>
+          </div>
+          <div className="row">
+            <div className="col-6 ">
+              <button type="submit" className="btn btn-primary send-btn">
+                {loading ? (
+                  <div
+                    className="spinner-border text-primary"
+                    role="status"
+                  ></div>
+                ) : (
+                  " Send "
+                )}
+              </button>
             </div>
-            <div className="col-md-6 car-prev">
-              <img src={selectedCar[1]} height="80" />
+            <div className="col-6 car-prev">
+              <img src={selectedCarFromForm[1]} height="80" />
             </div>
           </div>
         </form>

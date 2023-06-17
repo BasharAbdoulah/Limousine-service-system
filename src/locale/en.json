@@ -48,5 +48,16 @@
     "car_feature3": "DVD Player",
     "car_feature4": "Black Leather Interior",
     "car_service_title": "SERVICE OFFERED IN THIS VEHICLE",
-    "car_preview": "Preview"
+    "car_preview": "Preview",
+
+    "model_label_phonenumber": "Phone number",
+    "model_label_email": "Email",
+    "model_label_pickfrom": "Pick up from",
+    "model_label_pickto": "Pick up to",
+    "model_label_time": "Pick up time",
+    "model_label_date": "In Date",
+    "model_label_tripType": "Trip type",
+    "model_label_duration": "Trip duration",
+    "model_label_car": "Choose car",
+    "model_title": "Booking a Trip"
   }

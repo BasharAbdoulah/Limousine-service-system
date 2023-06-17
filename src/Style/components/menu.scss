@@ -1,0 +1,59 @@
+@use "../helpers/mixins.scss" as *;
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
+@import "../variables/index.scss" ;
+
+.burger-navbar {
+    position: absolute;
+    direction: ltr;
+    width: 100%;
+    top: 0;
+    left: -100%;
+    height: 100vh;
+    z-index: 45434;
+    display: flex;
+    background-color: $main-color;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    @include breakpoints(la-me) {
+        display: none;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+        @include breakpoints(la-me) {
+            flex-direction: row;
+        }
+
+        .nav-link {
+            a {
+                color: $text-white;
+            }
+            &:first-child {
+                a {
+                    padding: 0 !important;
+                }
+            }
+        }
+    }
+
+    &.open {
+        left: 0;
+    }
+}
+
+.close-icon {
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    padding: 15px  2px 15px 15px;
+    color: $text-white;
+    @include breakpoints(la-me) {
+        display: none;
+    }
+    i {
+        font-size: 23px;
+    }
+}

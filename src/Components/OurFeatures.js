@@ -5,7 +5,7 @@ function OurFeatures() {
   const { t, i18n } = useTranslation();
   return (
     <div className="row">
-      <div className="container px-4 py-5" id="featured-3">
+      <div className=" px-4 py-5" id="featured-3">
         <h2 className="pb-2 border-bottom  title">{t("articles_title")}</h2>
         <div className="row g-4 py-5 row-cols-1 row-cols-lg-3">
           <div className="feature col">

@@ -1,0 +1,29 @@
+// Global classes
+.f-center {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+p, ul {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    // font-family: "math";
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+label {
+    margin-bottom: 8px;
+}
+
+a {
+    text-decoration: none;
+}

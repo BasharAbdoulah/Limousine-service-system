@@ -5,10 +5,11 @@ import { selectCar } from "../redux/showModelSlice";
 
 function FeeltItem({ car }) {
   const dispatch = useDispatch();
+
   return (
     <div className="row justify-content-center">
       <div className=" car-item">
-        <div className="hover-layout center">
+        <div className="car-container">
           <div className="layout center">
             <div className="circle center">
               <Link
@@ -16,19 +17,17 @@ function FeeltItem({ car }) {
                 onClick={() => dispatch(selectCar(car))}
                 to={"/carPreview"}
               >
-                <i class="bi bi-arrow-right-circle"></i>
+                <i className="bi bi-arrow-right-circle"></i>
               </Link>
             </div>
           </div>
-        </div>
-        <a className="" href="#">
           <img
             className="img"
             src={car?.carImg}
             alt="Generic placeholder image"
           />
-          <h3>{car.carNameEn}</h3>
-        </a>
+          <h3>{car.carName}</h3>
+        </div>
       </div>
     </div>
   );

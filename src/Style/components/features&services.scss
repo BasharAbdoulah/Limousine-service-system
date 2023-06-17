@@ -1,6 +1,6 @@
 // Import colors and sizes variables
-@import "./variables.scss";
-
+@use "../helpers/mixins.scss" as*;
+@import "../variables/index.scss";
 
 .feature {
     h3 {
@@ -8,7 +8,7 @@
         text-transform: uppercase;
     }
     p {
-        font-size: $text-size-s;
+        font-size: $text-size-m;
     }
 }
 
@@ -18,19 +18,30 @@
     padding: 35px ;
     background-color: $main-color;
     align-items: center;
+    @include breakpoints(mobile) {
+        flex-direction: column;
+        row-gap: 15px;
+    }
     h2 {
         font-size: $text-size-xl;
         font-weight: 600;
         color: $text-white;
+        @include breakpoints(mobile) {
+            font-size: $text-size-l;
+        }
     }
     P {
         margin: 0;
         font-size: $text-size-m;
         color: $text-white;
+        @include breakpoints(mobile) {
+            font-size: $text-size-s;
+            text-align: center;
+        }
     }
     a {
-        background-color: #cc8604;
-        color: $text-white;
+        background-color:$text-white;
+        color: $main-color;
         font-weight: 600;
         text-decoration: none;
         border-radius: 4px;
@@ -49,7 +60,7 @@
             text-transform: uppercase;
         }
         p {
-            font-size: $text-size-s;
+            font-size: $text-size-m;
         }
         a {
             color: $main-color;

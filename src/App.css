@@ -53,3 +53,7 @@
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
 }
+.App {
+  position: relative;
+  overflow: hidden;
+}

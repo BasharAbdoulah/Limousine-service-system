@@ -8,9 +8,8 @@ function CallNowPart() {
     window.innerWidth,
     window.innerHeight,
   ]);
-  const state = useSelector((state) => state.showModel1.value);
+
   const dispatch = useDispatch();
-  console.log(state);
   useEffect(() => {
     const handleWindowResize = () => {
       setWindowSizes([window.innerWidth, window.innerHeight]);

@@ -1,11 +1,15 @@
 // import variables
-@import "./variables.scss";
+@use "../helpers/mixins.scss" as*;
+@import "../variables/index.scss";
 //
 
-section .container {
-padding: 0 100px;
-}
+// section .container {
+// padding: 0 100px;
+// }
 .preview {
+    @include breakpoints(mobile) {
+        flex-direction: column;
+    }
     h3 {
         text-transform: uppercase;
         margin: 25px 0 10px;
@@ -16,6 +20,9 @@ padding: 0 100px;
     }
     padding: 60px 0;
     .preview-column {
+        @include breakpoints(mobile) {
+            width: 100%;
+        }
         .preview-caption {
             p {
                 color: $text-dark-min;
@@ -33,9 +40,18 @@ padding: 0 100px;
                 margin-top: 10px;
             }
         }
+
+        .img-preview {
+            width: 90%;
+            height: 90%;
+        }
     }
 
     .pricing-column {
+        @include breakpoints(mobile) {
+            width: 100%;
+            margin-top: 20px;
+        }
         .features-table {
             margin-top: 40px;
             .item {

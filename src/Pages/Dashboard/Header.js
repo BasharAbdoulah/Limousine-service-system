@@ -9,7 +9,7 @@ function Header() {
       >
         <div className="container-xl">
           <a className="navbar-brand" href="#">
-            Container XL
+            وحدة التحكم
           </a>
           <button
             className="navbar-toggler"
@@ -26,24 +26,12 @@ function Header() {
           <div className="collapse navbar-collapse" id="navbarsExample07XL">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
-                  Home
-                </a>
+                <a className="nav-link active" aria-current="page" href="#"></a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Link
-                </a>
+                <a className="nav-link" href="#"></a>
               </li>
             </ul>
-            <form role="search">
-              <input
-                className="form-control"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-            </form>
           </div>
         </div>
       </nav>
