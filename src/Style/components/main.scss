@@ -1,6 +1,6 @@
 // Import colors and sizes variables
 @use "../helpers/mixins.scss" as *;
-@import "../variables/index.scss";
+@use "../variables/index.scss" as *;
 
 
 
@@ -250,6 +250,7 @@ main {
 .bg-callnow {
     background-color: transparent !important;
     position: relative;
+    margin-top: 70px;
     width: 100%;
     overflow: hidden;
     @include breakpoints(mobile) {
@@ -289,8 +290,10 @@ main {
             background-color: $main-color;
             margin: 10px 0 !important;
             color: $text-white;
+            transition: all 0.3s ease;
             &:hover {
                 background-color: #ac7001;
+                transform: scale(103%);
             }
         }
     }

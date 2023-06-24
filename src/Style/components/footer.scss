@@ -1,5 +1,5 @@
 // Import colors and sizes variables
-@import "../variables/index.scss";
+@use "../variables/index.scss" as *;
 
 // Footer section
 footer {

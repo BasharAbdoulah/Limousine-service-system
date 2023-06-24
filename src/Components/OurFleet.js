@@ -11,7 +11,6 @@ function OurFleet() {
   const [allCars, setAllCars] = useState();
   const [allTypes, setAllTypes] = useState();
   const [loding, setloding] = useState();
-  const [carsSelectedType, setCarsSelectedType] = useState();
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
   };
@@ -41,7 +40,7 @@ function OurFleet() {
     true
   );
 
-  // Get Cars types
+  // Get Cars by types
   let cType;
   const {
     data: carsByTypeData,
@@ -99,30 +98,7 @@ function OurFleet() {
       }
     } else {
       try {
-        const res = await getData("https://localhost:44316/api/Car", "");
-        if (res.data) {
-          let carsAfterDecode = decodeUrls(res.data);
-          setAllCars(carsAfterDecode);
-          setloding(false);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
-
-  // get cars by type
-  const getData = async (url, type) => {
-    if (type) {
-      console.log("Type is", type);
-      const res = await axios.get(
-        `https://localhost:44316/api/Car/CarsByType/${type}`
-      );
-      if (res.data) return res;
-    } else {
-      try {
-        const res = await axios.get(url);
-        if (res.data) return res;
+        excuteGetCars(false, undefined);
       } catch (error) {
         console.error(error);
       }
@@ -171,7 +147,7 @@ function OurFleet() {
         </ul>
       </div>
 
-      {loding ? (
+      {carsLoding ? (
         <div className="row lodaing-container">
           <div className="spinner-border text-primary" role="status">
             <span className="sr-only"></span>

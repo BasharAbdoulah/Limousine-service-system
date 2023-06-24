@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../Dashboard/Style/login.scss";
 import Cookies from "js-cookie";
 import axios from "axios";
+import useFetch from "../../localHooks/useFetch";
 
 // Save the token in a cookie
 // Cookies.set('authToken', authToken, { secure: true, expires: 7, sameSite: 'strict' });
@@ -10,33 +11,41 @@ function Login({ authentication }) {
   const [loginMessage, setLoginMessage] = useState();
   const [loading, setLoading] = useState(false);
 
+  // Get Cars
+  const {
+    data: loginData,
+    loading: loginLoading,
+    error: loginErr,
+    excuteFetch: loginExcute,
+  } = useFetch(
+    `${process.env.REACT_APP_PUBLIC_URL}${process.env.REACT_APP_PUBLIC_LOGIN}`,
+
+    "post",
+    false
+  );
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    await axios
-      .post("https://localhost:44316/api/Login", {
-        Email: e.target.email.value,
-        Password: e.target.password.value,
-      })
-      .then((r) => {
-        if (r.status === 200) {
-          setLoading(false);
-          authentication(true);
-          Cookies.set("authToken", r.data.accessToken, {
-            secure: true,
-            expires: 1,
-            sameSite: "strict",
-          });
-        }
-      })
-      .catch((err) => {
-        if (err.response.status === 400) {
-          setLoading(false);
-          setLoginMessage(err.response.data);
-        }
-      });
+    let payload = {
+      Email: e.target.email.value,
+      Password: e.target.password.value,
+    };
+    loginExcute(false, undefined, payload);
   };
+
+  useEffect(() => {
+    console.log(loginErr);
+    if (loginData != null) {
+      authentication(true);
+      Cookies.set("authToken", loginData.accessToken, {
+        secure: true,
+        expires: 1,
+        sameSite: "strict",
+      });
+    } else if (loginErr?.status === false) setLoginMessage(loginErr.message);
+  }, [loginData, loginErr]);
+
   return (
     <section className="ftco-section">
       <div className="container">
@@ -105,9 +114,9 @@ function Login({ authentication }) {
                       type="submit"
                       className="form-control  btn-primary rounded submit px-3"
                     >
-                      {loading ? (
+                      {loginLoading ? (
                         <div
-                          class="spinner-border text-warning"
+                          className="spinner-border text-warning"
                           role="status"
                         ></div>
                       ) : (
@@ -116,7 +125,7 @@ function Login({ authentication }) {
                     </button>
                   </div>
                   {loginMessage != null ? (
-                    <div class="alert " role="alert">
+                    <div className="alert alert-danger" role="alert">
                       {loginMessage}
                     </div>
                   ) : (

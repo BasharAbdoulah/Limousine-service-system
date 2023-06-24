@@ -1,6 +1,6 @@
 // Import colors and sizes variables
 @use "../helpers/mixins.scss" as *;
-@import "../variables/index.scss";
+@use "../variables/index.scss" as *;
 
 
 // Rates page
@@ -104,7 +104,7 @@
         width: 100%;
         height: 100%;
         background-color: rgb(0 0 0 / 71%);;
-        z-index: 4;
+        z-index: 0;
     }
     h3 {
         text-align: center;
@@ -120,13 +120,16 @@
     background-image: url("../../images/sigmund-3tMwhY2aqGg-unsplash.jpg");
 }
 .second-bg {
-    background-image: url("../../images/talia-PKdQIG4goQc-unsplash.jpg");
     flex-direction: column;
-    height: 500px;
+    height: 400px;
+    @include breakpoints(la-me) {
+        height: 750px;
+        width: auto;
+    }
     .col-8 {
         text-align: left;
-        box-shadow: 0 0 20px 20px #00000066;
-        background-color: #03030361;
+        // box-shadow: 0 0 20px 20px #00000066;
+        // background-color: #03030361;
         @include breakpoints(mobile) {
             width: auto;
         }
@@ -154,14 +157,19 @@
             z-index: 45;
             padding: 10px;
             width: fit-content;
-            margin-top: 40px;
+            
             font-size: $text-size-m;
             font-weight: 600;
             color: $main-color;
-            border-color: $main-color;
-                background-color: $main-color;
-                color: $text-white;
-
+            border: none;
+            margin: 40px 5px;
+            background-color: $main-color;
+            color: $text-white;
+            transition: all 0.3s ease;
+                &:hover {
+                    background-color: #ac7001;
+                    transform: scale(105%);
+                }
         }
     }
 }

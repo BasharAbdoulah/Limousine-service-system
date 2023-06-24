@@ -1,13 +1,24 @@
-import axios from "axios";
-import React, { memo, useCallback, useEffect, useState } from "react";
+import React, { memo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import Menu from "./Menu";
+import useFetch from "../localHooks/useFetch";
 
 function Header({ handleOpen }) {
   const { t, i18n } = useTranslation();
-  const [isOpen, setIsOpen] = useState(false);
   const userAgent = navigator.userAgentData;
+
+  // Get Cars
+  const {
+    data: visitorPostData,
+    loading: visitorPostLo,
+    error: visitorPostErr,
+    excuteFetch: visitorPostExcute,
+  } = useFetch(
+    `${process.env.REACT_APP_PUBLIC_URL}${process.env.REACT_APP_PUBLIC_ANALYTICS}`,
+
+    "post",
+    true
+  );
 
   const handleChangeLang = () => {
     if (i18n.language == "en") {
@@ -34,36 +45,29 @@ function Header({ handleOpen }) {
     }
   }, []);
 
-  // Initialize the agent at application startup.
-  const fpPromise = import("https://openfpcdn.io/fingerprintjs/v3").then(
-    (FingerprintJS) => FingerprintJS.load()
-  );
-
   // Saving visitors data for analysis
   const SaveUserAgent = async (visitorId) => {
-    console.log("saveUserAgent has been triggerd", visitorId);
     if (visitorId != undefined) {
-      await axios
-        .post("https://localhost:44316/api/UserAgent", {
-          IsMobile: userAgent.mobile,
-          Platform: userAgent.platform,
-          VisitorId: visitorId,
-        })
-        .catch((err) => console.log(err));
+      let id = visitorId.split(" ").join();
+      let body = {
+        IsMobile: userAgent.mobile,
+        Platform: userAgent.platform,
+        VisitorId: id,
+      };
+      visitorPostExcute(false, undefined, body);
     }
   };
+
+  useEffect(() => {
+    if (visitorPostErr != null) console.error(visitorPostErr);
+  }, [visitorPostErr]);
 
   // Get the visitor identifier when you need it.
   let count = 0;
   useEffect(() => {
     count++;
     if (count == 1) {
-      fpPromise
-        .then((fp) => fp.get())
-        .then((result) => {
-          // This is the visitor identifier:
-          SaveUserAgent(result.visitorId);
-        });
+      SaveUserAgent(navigator.userAgent);
     }
   }, []);
 

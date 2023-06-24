@@ -31,9 +31,11 @@ function HomePage() {
       </div>
       {/* <hr class="featurette-divider" /> */}
       <div className="check-rates">
-        <h2>{t("checkrates_title")}</h2>
+        <h2 className="" data-aos-duration="1000" data-aos="fade-left">
+          {t("checkrates_title")}
+        </h2>
         <p>{t("checkrates_text")}</p>
-        <Link to={"/rates"} className="">
+        <Link to={"/rates"} data-aos-duration="1000" data-aos="flip-down">
           {t("checkrates_btn")}
         </Link>
       </div>

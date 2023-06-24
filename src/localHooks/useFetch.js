@@ -10,29 +10,32 @@ const useFetch = (url = "", method = "post", token = true) => {
 
   const cookie = Cookies.get("authToken");
   const excuteFetch = async (isPageination, params, body = null) => {
-    console.log(body);
-
-    console.log("url", params);
     if (params !== undefined) url = url + params;
 
     // `${url}?skip=${skip}&take=${take}`
 
     setLoading(true);
-    const { data: response } = await axios({
+    const axiosConfig = {
       method: method,
       url: url,
       data: {
         ...body,
       },
-      headers: {
-        Authorization: `Bearer ${cookie}`,
-      },
+      headers: {},
+    };
+
+    if (token) {
+      axiosConfig.headers.Authorization = `Bearer ${cookie}`;
+    }
+
+    const response = await axios(axiosConfig).catch((err) => {
+      setError(err?.response.data);
+      setLoading(false);
     });
+
     setLoading(false);
     if (response) {
-      setData(response);
-    } else {
-      setError(response?.description);
+      setData(response?.data);
     }
   };
 

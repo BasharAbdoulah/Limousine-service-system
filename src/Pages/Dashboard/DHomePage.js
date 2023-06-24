@@ -1,20 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
-import cadilac from "../../images/Cadillac-CT6-EU-spec-2016-2560x1600-001.jpg";
 import Modal from "antd/lib/modal";
 import { Alert, Button } from "antd";
 import CountUp from "react-countup";
-import axios from "axios";
-import {
-  Form,
-  Image,
-  Input,
-  InputNumber,
-  Select,
-  Spin,
-  Col,
-  Row,
-  Statistic,
-} from "antd";
+import { Form, Col, Row, Statistic } from "antd";
 import { storage } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
@@ -49,7 +37,7 @@ function DHomePage() {
     error: delError,
     excuteFetch: excuteDelete,
   } = useFetch(
-    `${process.env.REACT_APP_PUBLIC_URL}${process.env.REACT_APP_PUBLIC_CAR}/${selectedCar?.id}`,
+    `${process.env.REACT_APP_PUBLIC_URL}${process.env.REACT_APP_PUBLIC_CAR}`,
 
     "delete",
     true
@@ -125,7 +113,7 @@ function DHomePage() {
     loading: editLoading,
     error: editErr,
   } = useFetch(
-    `${process.env.REACT_APP_PUBLIC_URL}${process.env.REACT_APP_PUBLIC_CAR}/${selectedCar?.id}`,
+    `${process.env.REACT_APP_PUBLIC_URL}${process.env.REACT_APP_PUBLIC_CAR}`,
 
     "put",
     true
@@ -144,8 +132,16 @@ function DHomePage() {
       feedback(false);
     }
 
-    if (delError != null) console.error(delError);
-  }, [delData]);
+    if (delError != null) {
+      Swal.fire({
+        title: "خطأ",
+        text: "هناك خطأ ما!",
+        icon: "error",
+        confirmButtonText: "أستمر",
+      });
+      console.error(delError);
+    }
+  }, [delData, delError]);
 
   // Get the all data
   const getData = async () => {
@@ -196,7 +192,7 @@ function DHomePage() {
       feedback(false);
       console.error(editErr);
     }
-  }, [editData]);
+  }, [editData, editErr]);
 
   // Returned feedback function
   const feedback = (value) => {
@@ -249,7 +245,7 @@ function DHomePage() {
   };
 
   // Handle delete
-  const handleDelete = () => excuteDelete(false, 0, 0);
+  const handleDelete = () => excuteDelete(false, `/${selectedCar.id}`);
 
   const handleMainImg = async (e) => {
     setUploadLoading1(true);
@@ -269,7 +265,20 @@ function DHomePage() {
   // To submit the changes
   const postCar = async (v, img1, img2) => {
     setLoading(true);
-    excuteEdit(false, 0, 0, {
+    console.log({
+      id: selectedCar.id,
+      carName: v.carName,
+      carImg: img1 == false ? selectedCar.carImg : img1,
+      carSubImg: img2 == false ? selectedCar.carSubImg : img2,
+      Preview: v.description,
+      perHour: v.perHour,
+      PerDay: v.perDay,
+      Passengers: 4,
+      airportTransfer: v.airport,
+      carType: selectedCar.carType,
+      carTypeId: v.carTypeId,
+    });
+    excuteEdit(false, `/${selectedCar.id}`, {
       id: selectedCar.id,
       carName: v.carName,
       carImg: img1 == false ? selectedCar.carImg : img1,
@@ -392,7 +401,9 @@ function DHomePage() {
       <hr className="featurette-divider" />
       <h2 style={{ marginBottom: "20px" }}>أخر طلب:</h2>
       {lastRequestLo ? (
-        <div class="spinner-border text-warning" role="status"></div>
+        <div className="d-flex justify-content-center align-items-center p-2">
+          <div class="spinner-border text-warning" role="status"></div>
+        </div>
       ) : (
         <div
           key={requests[requests?.length - 1]?.requestId}
@@ -412,37 +423,47 @@ function DHomePage() {
       )}
       <hr className="featurette-divider" />
       <h2 style={{ marginBottom: "20px" }}>جميع السيارات:</h2>
-      <div className="existing-cars row">
-        {cars?.map((car) => {
-          return (
-            <div class="card" style={{ width: "18rem", direction: "ltr" }}>
-              <img class="card-img-top" src={car.carImg} alt="Card image cap" />
-              <div class="card-body">
-                <h6 class="card-title">Model: 2018</h6>
-                <h5 class="card-title">Name: {car.carName}</h5>
-                <a
-                  onClick={() => handleEdit(car)}
-                  href="#"
-                  class="btn btn-primary"
-                >
-                  تعديل
-                </a>
-                <a
-                  data-toggle="modal"
-                  data-target="#exampleModalCenter"
-                  onClick={() => {
-                    setSelectedCar(car);
-                    setIsModalOpen(true);
-                  }}
-                  class="btn btn-danger"
-                >
-                  حذف
-                </a>
+      {!carsLoding ? (
+        <div className="existing-cars row">
+          {cars?.map((car) => {
+            return (
+              <div class="card" style={{ width: "18rem", direction: "ltr" }}>
+                <img
+                  class="card-img-top"
+                  src={car.carImg}
+                  alt="Card image cap"
+                />
+                <div class="card-body">
+                  <h6 class="card-title">Model: 2018</h6>
+                  <h5 class="card-title">Name: {car.carName}</h5>
+                  <a
+                    onClick={() => handleEdit(car)}
+                    href="#"
+                    class="btn btn-primary"
+                  >
+                    تعديل
+                  </a>
+                  <a
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                    onClick={() => {
+                      setSelectedCar(car);
+                      setIsModalOpen(true);
+                    }}
+                    class="btn btn-danger"
+                  >
+                    حذف
+                  </a>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="d-flex justify-content-center align-items-center p-2">
+          <div class="spinner-border text-warning" role="status"></div>
+        </div>
+      )}
       <EditModel
         editMode={editMode}
         handleSubmit={handleSubmit}

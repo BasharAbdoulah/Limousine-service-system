@@ -31,7 +31,6 @@ function EditModel({
 
   useEffect(() => {
     if (selectedCar != undefined) {
-      console.log("selected", selectedCar);
       form.setFieldValue("carName", selectedCar.carName);
       form.setFieldValue("perDay", selectedCar.perDay);
       form.setFieldValue("perHour", selectedCar.perHour);

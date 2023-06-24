@@ -1,7 +1,12 @@
 // Import colors and sizes variables
 @use "../helpers/mixins.scss" as*;
-@import "../variables/index.scss";
+@use  "../variables/index.scss" as *;
 
+.features{
+    padding: 150px 80px;
+    @include breakpoints(mobile) {
+        padding: 40px;
+    }
 .feature {
     h3 {
         font-size: $text-size-l !important;
@@ -11,11 +16,12 @@
         font-size: $text-size-m;
     }
 }
+}
 
 .check-rates {
     display: flex;
     justify-content: space-evenly;
-    padding: 35px ;
+    padding: 324px 80px;
     background-color: $main-color;
     align-items: center;
     @include breakpoints(mobile) {
@@ -23,7 +29,7 @@
         row-gap: 15px;
     }
     h2 {
-        font-size: $text-size-xl;
+        font-size: $text-size-xxl;
         font-weight: 600;
         color: $text-white;
         @include breakpoints(mobile) {
@@ -48,11 +54,17 @@
         padding: 7px 10px;
         cursor: pointer;
         // border: 1px solid #fff;
+
+        &:hover {
+            background-color: rgb(233, 233, 233);
+            transform: scale(1.1);
+        }
     }
 }
 
 // Services
 .services {
+    padding: 200px 80px;
     .service {
         h3 {
             font-size: 20px;

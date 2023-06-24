@@ -32,9 +32,21 @@ function CallNowPart() {
         loop
       ></video>
       <div className="py-5 callnow-caption">
-        <h1 className="display-5 fw-bold text-white">{t("call_text")}</h1>
+        <h1
+          data-aos="fade-right"
+          data-aos-duration="1000"
+          className="display-5 fw-bold text-white"
+        >
+          {t("call_text")}
+        </h1>
         <div className="col-lg-6 f-center mx-auto">
-          <h3 className="fs-5 mb-4">{t("call_title")}</h3>
+          <h3
+            className="fs-5 mb-4"
+            data-aos="flip-left"
+            data-aos-duration="1000"
+          >
+            {t("call_title")}
+          </h3>
           <p className="line-around">OR</p>
           <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
             <button

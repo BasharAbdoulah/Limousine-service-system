@@ -61,9 +61,15 @@ function AddVehicle() {
       setNewImage2();
       Ref.current.reset();
     } else if (carsTypesErr != null) {
+      Swal.fire({
+        title: "خطأ",
+        text: "هناك خطأ ما!",
+        icon: "error",
+        confirmButtonText: "أستمر",
+      });
       console.error(postCarError);
     }
-  }, [postCarData]);
+  }, [postCarData, postCarError]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -109,9 +115,6 @@ function AddVehicle() {
     const carType = carTypes?.filter(
       (type) => type.id == parseInt(v.carType.value)
     );
-
-    let encodedUrl1 = encodeURIComponent(url1);
-    let encodedUrl2 = encodeURIComponent(url2);
 
     const body = {
       carName: v.carName.value,
