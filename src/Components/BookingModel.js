@@ -23,7 +23,7 @@ function BookingModel() {
     error: carsErr,
     excuteFetch: excuteGetCars,
   } = useFetch(
-    `${process.env.REACT_APP_PUBLIC_URL}${process.env.REACT_APP_PUBLIC_CAR}`,
+    `${process.env.REACT_APP_PUBLIC_URL}${process.env.REACT_APP_PUBLIC_CAR}fdsf`,
 
     "get",
     false
@@ -52,6 +52,7 @@ function BookingModel() {
   // Get All cars
   useEffect(() => {
     if (carsData != null) {
+      console.log("cars data 55", carsData);
       let carsAfterDecode = decodeUrls(carsData);
       setCars(carsAfterDecode);
     }
@@ -118,6 +119,7 @@ function BookingModel() {
   }, [postRequestData, postRequestErr]);
 
   const decodeUrls = (list) => {
+    console.log(list);
     let carsAfterDecode = [];
     list.map((car) => {
       let decodedMainImgUrl = decodeURIComponent(car.carImg);
