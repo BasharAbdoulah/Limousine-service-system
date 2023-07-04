@@ -23,7 +23,7 @@ function BookingModel() {
     error: carsErr,
     excuteFetch: excuteGetCars,
   } = useFetch(
-    `${process.env.REACT_APP_PUBLIC_URL}${process.env.REACT_APP_PUBLIC_CAR}fdsf`,
+    `${process.env.REACT_APP_PUBLIC_URL}${process.env.REACT_APP_PUBLIC_CAR}`,
 
     "get",
     false
