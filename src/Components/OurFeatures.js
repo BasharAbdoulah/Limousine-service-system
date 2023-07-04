@@ -7,7 +7,7 @@ function OurFeatures() {
     <div className="row">
       <div className=" features" id="featured-3">
         <h2
-          data-aos-duration="1000"
+          data-aos-duration="1500"
           data-aos="fade-left"
           className="pb-2 border-bottom  title"
         >
@@ -16,7 +16,7 @@ function OurFeatures() {
         <div className="row g-4 py-5 row-cols-1 row-cols-lg-3">
           <div
             className="feature col"
-            data-aos-duration="1000"
+            data-aos-duration="1500"
             data-aos="fade-right"
           >
             <h3 className="animate__animated animate__fadeIn">
@@ -34,7 +34,7 @@ function OurFeatures() {
           </div>
           <div
             className="feature col"
-            data-aos-duration="1000"
+            data-aos-duration="1500"
             data-aos="fade-left"
           >
             <h3>{t("feature3_title")}</h3>

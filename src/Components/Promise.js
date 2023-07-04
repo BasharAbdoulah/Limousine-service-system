@@ -14,7 +14,7 @@ function Promise({ position }) {
         className="col-8 "
         data-aos="fade-up"
         data-aos-anchor-placement="bottom-bottom"
-        data-aos-duration="1000"
+        data-aos-duration="1500"
       >
         <h3>{t("promise_title")}</h3>
         <p>{t("promise")}</p>

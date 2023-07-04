@@ -8,7 +8,7 @@ function OurServices() {
       <div className="row ">
         <div className="container services " id="featured-3">
           <h2
-            data-aos-duration="1000"
+            data-aos-duration="1500"
             data-aos="fade-left"
             className="pb-2 border-bottom title"
           >
@@ -18,7 +18,7 @@ function OurServices() {
             <div
               className="service col "
               data-aos="fade-right"
-              data-aos-duration="1000"
+              data-aos-duration="1500"
             >
               <div className=" bg-gradient fs-2 mb-3">
                 <i className="bi bi-hospital-fill"></i>
@@ -29,7 +29,7 @@ function OurServices() {
             <div
               className="service col "
               data-aos="zoom-in"
-              data-aos-duration="1000"
+              data-aos-duration="1500"
             >
               <div className=" bg-gradient fs-2 mb-3">
                 <i className="bi bi-car-front-fill"></i>
@@ -40,7 +40,7 @@ function OurServices() {
             <div
               className="service col "
               data-aos="fade-left"
-              data-aos-duration="1000"
+              data-aos-duration="1500"
             >
               <div className=" bg-gradient fs-2 mb-3">
                 <i className="bi bi-airplane"></i>

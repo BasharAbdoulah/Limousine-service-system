@@ -34,7 +34,7 @@ function CallNowPart() {
       <div className="py-5 callnow-caption">
         <h1
           data-aos="fade-right"
-          data-aos-duration="1000"
+          data-aos-duration="1500"
           className="display-5 fw-bold text-white"
         >
           {t("call_text")}
@@ -43,7 +43,7 @@ function CallNowPart() {
           <h3
             className="fs-5 mb-4"
             data-aos="flip-left"
-            data-aos-duration="1000"
+            data-aos-duration="1500"
           >
             {t("call_title")}
           </h3>
