@@ -7,9 +7,7 @@ function Promise({ position }) {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   return (
-    <div
-      className={`row second-bg p-5 f-center ${position == "home" && "home"}`}
-    >
+    <div className={`row second-bg p-5 f-center home`}>
       <div
         className="col-8 "
         data-aos="fade-up"

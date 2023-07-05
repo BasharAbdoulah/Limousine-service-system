@@ -52,7 +52,7 @@ function CallNowPart() {
             <button
               onClick={() => dispatch(showModel())}
               type="button"
-              className="btn  btn-m px-4 me-sm-3 fw-bold"
+              className="btn  btn-m px-2 me-sm-3 fw-bold"
             >
               {t("call_btn_text")}
             </button>

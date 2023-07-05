@@ -42,7 +42,7 @@ function HomePage() {
       <div className="container marketing" id="services">
         <OurServices />
       </div>
-      <Promise position={"home"} />
+      <Promise />
     </main>
   );
 }

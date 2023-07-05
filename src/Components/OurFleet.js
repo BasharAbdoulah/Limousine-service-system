@@ -73,8 +73,8 @@ function OurFleet() {
 
   useEffect(() => {
     if (carsByTypeData != null) {
-      console.log(carsByTypeData);
       let carsAfterDecode = decodeUrls(carsByTypeData);
+      console.log(carsAfterDecode);
       setAllCars(carsAfterDecode);
     } else if (carsTypesErr != null) console.error(carsByTypeErr);
 
@@ -147,7 +147,7 @@ function OurFleet() {
         </ul>
       </div>
 
-      {carsLoding ? (
+      {loding ? (
         <div className="row lodaing-container">
           <div className="spinner-border text-primary" role="status">
             <span className="sr-only"></span>
